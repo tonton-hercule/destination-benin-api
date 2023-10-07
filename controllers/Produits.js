@@ -32,6 +32,7 @@ const dataController = {
             }
         })*/
 
+        //Stokage des images
         const storage = multer.diskStorage({
             destination: function (req, file, cb) {
                 cb(null, '/public/images/produits')
