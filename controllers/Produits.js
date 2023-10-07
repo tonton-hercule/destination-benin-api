@@ -44,6 +44,7 @@ const dataController = {
         })
 
         const upload = multer({ storage: storage })
+        upload.single('avatar')
 
         const produit = new ProduitsModel({
             titre: req.body.titre,
@@ -52,7 +53,7 @@ const dataController = {
             taille: req.body.taille,
             couleur: req.body.couleur,
             prix: req.body.prix,
-            image: req.file.filename
+            image: req.file?.filename
         })
 
         //Save produit dans la db
