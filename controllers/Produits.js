@@ -1,4 +1,5 @@
 const ProduitsModel = require("../models/Produits")
+const multer = require("multer")
 
 const dataController = {
     /**Define all function of this controller */
@@ -24,6 +25,25 @@ const dataController = {
             return;
         }
 
+        /*let storage = multer.diskStorage({
+            destination: "/public/images/produits/",
+            filename: (req, file, cb) => {
+                cb(null, file.originalname)
+            }
+        })*/
+
+        const storage = multer.diskStorage({
+            destination: function (req, file, cb) {
+                cb(null, '/public/images/produits')
+            },
+            filename: function (req, file, cb) {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+                cb(null, file.fieldname + '-' + uniqueSuffix)
+            }
+        })
+
+        const upload = multer({ storage: storage })
+
         const produit = new ProduitsModel({
             titre: req.body.titre,
             description: req.body.description,
@@ -31,6 +51,7 @@ const dataController = {
             taille: req.body.taille,
             couleur: req.body.couleur,
             prix: req.body.prix,
+            image: req.file.filename
         })
 
         //Save produit dans la db
@@ -49,8 +70,8 @@ const dataController = {
 
     //FindOne
     findOne: async (req, res) => {
-       // const produit = await ProduitsModel.findById(req.params.id).populate({ path: 'categorieId.id', select: 'libelle' })
-       // res.status(200).send(produit)
+        // const produit = await ProduitsModel.findById(req.params.id).populate({ path: 'categorieId.id', select: 'libelle' })
+        // res.status(200).send(produit)
 
         try {
             let data = await ProduitsModel.findById(req.params.id).populate('categorieId')

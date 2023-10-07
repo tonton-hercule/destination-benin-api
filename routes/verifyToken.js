@@ -8,7 +8,10 @@ const verifyToken = (req, res, next) => {
         const token = authHeader.split(" ")[1] //get token
         //Check si le token est valide
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-            err && res.status(403).send("Token invalide !")
+            if (err) {
+                res.status(403).send({ message: "Le token invalide !"})
+                return
+            }
             //Si le token est valide
             req.user = user;
             next()
