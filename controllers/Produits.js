@@ -5,7 +5,7 @@ const dataController = {
     /**Define all function of this controller */
     findAll: async (req, res) => {
         await ProduitsModel.find().populate("categorieId").then(data => {
-            res.status(500).send({ produits: data })
+            res.status(200).send({ produits: data })
         }).catch(err => {
             res.status(500).send({
                 message:
@@ -58,7 +58,7 @@ const dataController = {
 
         //Save produit dans la db
         await produit.save(produit).then(data => {
-            res.send({
+            res.status(200).send({
                 message: "Enregistrement effectué avec succès !",
                 produits: data
             });
@@ -101,7 +101,7 @@ const dataController = {
                     message: `Aucun élément correspondant`
                 });
             } else {
-                res.send({ message: "Modification effectuée avec succès !" })
+                res.status(200).send({ message: "Modification effectuée avec succès !" })
             }
         }).catch(err => {
             res.status(500).send({ message: err.message })
@@ -117,7 +117,7 @@ const dataController = {
                     message: `Aucun élément correspondant`
                 });
             } else {
-                res.send({
+                res.status(200).send({
                     message: "Suppression effectuée avec succès !"
                 });
             }

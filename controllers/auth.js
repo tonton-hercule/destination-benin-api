@@ -45,7 +45,7 @@ const authController = {
 
         //Save user dans la db
         await user.save(user).then(data => {
-            res.send({
+            res.status(200).send({
                 message: "Enregistrement effectué avec succès !",
                 users: data
             });

@@ -4,9 +4,9 @@ const dataController = {
     /**Define all function of this controller */
     findAll: async (req, res) => {
         await CategoriesModel.find().then(data => {
-            res.status(500).send({ categories: data })
+            res.status(200).send({ categories: data })
         }).catch(err => {
-            res.status(500).send({
+            res.status(500).json({
                 message:
                     err.message || "Une erreur s'est produite lors de la récupération des données."
             });
@@ -31,7 +31,7 @@ const dataController = {
 
         //Save categorie dans la db
         await categorie.save(categorie).then(data => {
-            res.send({
+            res.status(200).send({
                 message: "Enregistrement effectué avec succès !",
                 categories: data
             });
@@ -46,7 +46,7 @@ const dataController = {
     //FindOne
     findOne: async (req, res) => {
         await CategoriesModel.findById(req.params.id).then(data => {
-            res.status(500).send({ categorie: data })
+            res.status(200).send({ categorie: data })
         }).catch(err => {
             res.status(500).send({
                 message: err.message
@@ -70,7 +70,7 @@ const dataController = {
                     message: `Aucun élément correspondant`
                 });
             } else {
-                res.send({ message: "Modification effectuée avec succès !" })
+                res.status(200).send({ message: "Modification effectuée avec succès !" })
             }
         }).catch(err => {
             res.status(500).send({ message: err.message })
@@ -86,7 +86,7 @@ const dataController = {
                     message: `Aucun élément correspondant`
                 });
               } else {
-                res.send({
+                res.status(200).send({
                   message: "Suppression effectuée avec succès !"
                 });
               }
