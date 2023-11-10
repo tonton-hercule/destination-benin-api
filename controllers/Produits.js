@@ -1,5 +1,9 @@
 const ProduitsModel = require("../models/Produits")
-const multer = require("multer")
+//const uploadFile = require('../middleware/upload')
+//const util = require("util");
+//const multer = require("multer");
+const path = require('path');
+const fs = require('fs').promises;
 
 const dataController = {
     /**Define all function of this controller */
@@ -17,7 +21,7 @@ const dataController = {
     //Create function
     create: async (req, res) => {
 
-        if (!req.body.titre) {
+        if (!req.body) {
             res.status(400).send({
                 message: "Le titre est obligatoire !"
             });
@@ -25,26 +29,55 @@ const dataController = {
             return;
         }
 
-        /*let storage = multer.diskStorage({
-            destination: "/public/images/produits/",
-            filename: (req, file, cb) => {
-                cb(null, file.originalname)
-            }
-        })*/
+        // Récupérez l'extension du fichier
+        // const fileExtension = path.extname(req.file.fieldname).toLowerCase();
 
-        //Stokage des images
-        const storage = multer.diskStorage({
-            destination: function (req, file, cb) {
-                cb(null, '/public/images/produits')
+
+        //await uploadFile(req, res); 
+
+
+        //const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+
+        //var nomFichier = req.file.fieldname + '-' + uniqueSuffix + fileExtension;
+
+        /*const maxSize = 2 * 1024 * 1024;
+        let nomFichier = ""
+
+        let storage = multer.diskStorage({
+            destination: (req, file, cb) => {
+                cb(null, __basedir + "/resources/static/assets/uploads/");
             },
-            filename: function (req, file, cb) {
+            filename: (req, file, cb) => {
                 const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-                cb(null, file.fieldname + '-' + uniqueSuffix)
-            }
-        })
 
-        const upload = multer({ storage: storage })
-        upload.single('avatar')
+                // Récupérez l'extension du fichier
+                const fileExtension = path.extname(file.originalname).toLowerCase();
+
+                //var fileExtension = file.originalname.split('.').pop();
+                //if (!['png', 'jpg', 'jpeg'].includes(fileExtension)) {
+                cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
+                nomFichier = file.fieldname + '-' + uniqueSuffix + fileExtension; 
+            },
+        });
+
+        let uploadFile = multer({
+            storage: storage,
+            limits: { fileSize: maxSize },
+        }).single("file");
+
+        util.promisify(uploadFile);*/
+
+        // Générez un nouveau nom de fichier unique
+        const newFileName = `${Date.now()}${path.extname(req.file.originalname)}`;
+
+        // Renommez le fichier et stockez-le dans le dossier public
+        const filePath = path.join(__dirname, '../public/produits', newFileName);
+        await fs.writeFile(filePath, req.file.buffer);
+
+
+        if (req.file == undefined) {
+            return res.status(400).send({ message: "Aucun fichier téléversé!" });
+        }
 
         const produit = new ProduitsModel({
             titre: req.body.titre,
@@ -53,7 +86,7 @@ const dataController = {
             taille: req.body.taille,
             couleur: req.body.couleur,
             prix: req.body.prix,
-            image: req.file?.filename
+            image: newFileName
         })
 
         //Save produit dans la db

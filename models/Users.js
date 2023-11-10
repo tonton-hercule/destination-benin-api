@@ -2,10 +2,18 @@ const mongoose = require("mongoose")
 
 const UserSchema = mongoose.Schema(
     {
-        username : { type: String, required: true, unique: true, trim: true, maxLength: 100},
+        nom : { type: String, required: true, maxLength: 100},
+        prenoms : { type: String, required: true, maxLength: 100},
+        telephone : { type: String, required: true, maxLength: 100},
         email: { type: String, trim: true, required: true ,  unique: true},
         password: { type: String, required: true },
-        isAdmin: { type: Boolean, default: false}
+        //isAdmin: { type: Boolean, default: false},
+        roleId:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "roles",
+            required: true
+        },
     },
     { timestamp: true }
 );

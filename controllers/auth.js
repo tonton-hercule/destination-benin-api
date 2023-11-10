@@ -5,25 +5,7 @@ const bcrypt = require("bcryptjs")
 
 const authController = {
     register: async (req, res) => {
-        /*try {
-            if (!req.body) {
-                res.status(400).send({ message: "Les données à enregistrer ne peuvent être vides " })
-    
-            }
-            const user = await UsersModel.create(req.body);
-    
-            const restData = await user.save()
-            res.status(200).send({
-                message: "Enregistrement effectué avec succès !",
-                user: restData
-            })
-        } catch (error) {
-            res.status(500).send({
-                message: error || "Une erreur s'est produite lors de l'enregistrement"
-            })
-        }*/
-
-
+        
         /**INFORMATION
          * bcrypt est spécialement conçu pour le hachage des password 
          * contrairement à CryptoJs qui est utilisé pour le chiffrement et ne dispose pas des même mécanismes que bcrypt
@@ -35,8 +17,11 @@ const authController = {
         }
 
         const user = new UsersModel({
-            username: req.body.username,
+            nom: req.body.nom,
+            prenoms: req.body.prenoms,
+            telephone: req.body.telephone,
             email: req.body.email,
+            roleId: req.body.roleId,
             /**PREMIERE METHODE DE CRYPTAGE DU PASSWORD */
             //password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_PASSWORD).toString(),
             /**DEUXIEME  METHODE DE CRYPTAGE DU PASSWORD*/
@@ -62,8 +47,8 @@ const authController = {
                 res.status(400).send({ message: "Les données d'authentification ne peuvent être vides " })
                 return
             }
-            //Check if email send by user exist in db
-            const user = await UsersModel.findOne({ email: req.body.email })
+            //Check if email send by user exist in db && get son role
+            const user = await UsersModel.findOne({ email: req.body.email }).populate('roleId')
             if (!user) {
                 res.status(401).json({ message: "Email incorrect !" })
                 return
@@ -86,7 +71,7 @@ const authController = {
             //Gestion du token
             const accessToken = jwt.sign({
                 id: user._id,
-                isAdmin: user.isAdmin
+                nom: user.nom
             }, process.env.JWT_SECRET, {
                 expiresIn: 86400, // 24 heures ou '1d'
             })

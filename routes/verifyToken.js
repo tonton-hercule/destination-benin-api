@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-const verifyToken = (req, res, next) => {
+const checkToken = (req, res, next) => {
     //Recuperer le token dans l'entête des requetes
     const authHeader = req.headers.authorization
 
@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
         //Check si le token est valide
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
-                res.status(403).send({ message: "Le token invalide !"})
+                res.status(403).send({ message: "Le token est invalide !"})
                 return
             }
             //Si le token est valide
@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
 }
 
 const verifyTokenAndAdmin = (req, res, next) => {
-    verifyToken(req, res, () => {
+    checkToken(req, res, () => {
         if (req.user.isAdmin) {
             next()
         } else {
@@ -31,4 +31,4 @@ const verifyTokenAndAdmin = (req, res, next) => {
     })
 }
 
-module.exports = { verifyToken, verifyTokenAndAdmin }
+module.exports = { checkToken, verifyTokenAndAdmin }
