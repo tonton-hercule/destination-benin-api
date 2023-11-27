@@ -40,7 +40,5 @@ Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce proje
 
 - [Hercule Jobed LEZINME](https://github.com/tonton-hercule) - Développeur principal
 
-## Licence
+## Note
 # Ce projet est encore en cours de developpement puisqu'il s'agit d'une initiative personnelle
-
-# Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
