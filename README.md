@@ -2,7 +2,7 @@
 
 # Application de Réservation de Lieux Touristiques au Bénin
 
-Ce projet est une application web basée sur Vue.js, conçue pour faciliter la réservation de lieux touristiques passionnants et variés au Bénin. L'application offre aux utilisateurs la possibilité de découvrir, sélectionner et réserver différents endroits à visiter dans ce magnifique pays, ainsi que de comparer les tarifs des agences touristiques.
+Ce projet est une application web basée sur Express.js, conçue pour faciliter la réservation de lieux touristiques passionnants et variés au Bénin. L'application offre aux utilisateurs la possibilité de découvrir, sélectionner et réserver différents endroits à visiter dans ce magnifique pays, ainsi que de comparer les tarifs des agences touristiques.
 
 ## Fonctionnalités Principales
 
@@ -41,5 +41,6 @@ Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce proje
 - [Hercule Jobed LEZINME](https://github.com/tonton-hercule) - Développeur principal
 
 ## Licence
+# Ce projet est encore en cours de developpement puisqu'il s'agit d'une initiative personnelle
 
 # Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
