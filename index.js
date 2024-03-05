@@ -43,7 +43,7 @@ mongoose.connect(process.env.BD_URL, {
 
 //Page d'accueil du server api
 app.get("/", (req, res) => {
-    res.json({ message: "Bienvenue sur mon application de réservation touristique" });
+    res.json({ message: "Bienvenue sur la bibliothèque numérique de l'EPA !" });
 })
 
 //mettre le content-type sur application/json

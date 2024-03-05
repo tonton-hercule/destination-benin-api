@@ -53,7 +53,6 @@ const dataController = {
     },
 
     //Update
-
     update: async (req, res) => {
         //Check si le les données ont été envoyées
         if (!req.body) {

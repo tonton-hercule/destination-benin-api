@@ -35,38 +35,6 @@ const dataController = {
 
         //await uploadFile(req, res); 
 
-
-        //const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-
-        //var nomFichier = req.file.fieldname + '-' + uniqueSuffix + fileExtension;
-
-        /*const maxSize = 2 * 1024 * 1024;
-        let nomFichier = ""
-
-        let storage = multer.diskStorage({
-            destination: (req, file, cb) => {
-                cb(null, __basedir + "/resources/static/assets/uploads/");
-            },
-            filename: (req, file, cb) => {
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-
-                // Récupérez l'extension du fichier
-                const fileExtension = path.extname(file.originalname).toLowerCase();
-
-                //var fileExtension = file.originalname.split('.').pop();
-                //if (!['png', 'jpg', 'jpeg'].includes(fileExtension)) {
-                cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
-                nomFichier = file.fieldname + '-' + uniqueSuffix + fileExtension; 
-            },
-        });
-
-        let uploadFile = multer({
-            storage: storage,
-            limits: { fileSize: maxSize },
-        }).single("file");
-
-        util.promisify(uploadFile);*/
-
         // Générez un nouveau nom de fichier unique
         const newFileName = `${Date.now()}${path.extname(req.file.originalname)}`;
 

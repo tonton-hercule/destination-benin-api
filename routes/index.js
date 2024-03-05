@@ -6,6 +6,8 @@ const ProduitsController = require("../controllers/Produits")
 const RolesController = require("../controllers/Roles")
 const UsersController = require("../controllers/Users")
 const authController = require("../controllers/auth")
+const ProfilsController = require("../controllers/Profils")
+const StatutsController = require("../controllers/Statuts")
 
 const { checkToken } = require("./verifyToken");
 
@@ -27,6 +29,28 @@ let routes = (app) => {
     router.post('/api/auth/register', authController.register)
 
     router.post('/api/auth/login', authController.login)
+
+    //###STATUTS #######///
+    router.get("/api/statuts", StatutsController.findAll)
+
+    router.post("/api/statuts/store", StatutsController.create)
+
+    router.get("/api/statuts/:id/edit", StatutsController.findOne)
+
+    router.put("/api/statuts/:id/update", StatutsController.update)
+
+    router.delete("/api/statuts/:id/delete", StatutsController.destroy)
+
+    //###PROFILS #######///
+    router.get("/api/profils", ProfilsController.findAll)
+
+    router.post("/api/profils/store", ProfilsController.create)
+
+    router.get("/api/profils/:id/edit", ProfilsController.findOne)
+
+    router.put("/api/profils/:id/update", ProfilsController.update)
+
+    router.delete("/api/profils/:id/delete", ProfilsController.destroy)
 
     //###CATEGORIES #######///
     router.get("/api/categories", CategoriesController.findAll)
